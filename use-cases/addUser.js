@@ -40,11 +40,5 @@ module.exports.excuteAddUser = function ({ usersDb }) {
         }
       });
     });
-
-    // const result = usersDb.addUser({
-    //   name: user.getName(),
-    //   email: user.getEmail(),
-    // });
-    // return result;
   };
 };
