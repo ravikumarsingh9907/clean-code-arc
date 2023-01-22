@@ -16,7 +16,6 @@ module.exports.makeAddUserDb = function ({ makeDb, sequelize }) {
 
     const get = `SELECT * FROM users`;
     const [getUser, metadata] = await sequelize.query(get);
-    console.log(getUser);
   }
 
   async function findByEmail({ email }) {

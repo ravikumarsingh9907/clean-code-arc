@@ -1,17 +1,16 @@
-module.exports.makePostUser = function ({ user, oAuth2Client, axios }) {
-  return async function postUser(httpRequest) {
+module.exports.getAuthToken = function ({ getTokens }) {
+  return async function getToken(httpRequest) {
     try {
-      const paramEmail = httpRequest.params.email;
-      const posted = await user.userAdded({ oAuth2Client, axios, paramEmail });
+      await getTokens(httpRequest.query.code);
+
       return {
         headers: {
           "Content-Type": "application/json",
         },
         statusCode: 201,
-        body: "data added",
+        body: httpRequest.query.code,
       };
     } catch (e) {
-      // TODO: Error logging
       return {
         headers: {
           "Content-Type": "application/json",

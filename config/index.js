@@ -1,7 +1,6 @@
 const axios = require("axios");
 const { google } = require("googleapis");
-const { gmail } = require("googleapis/build/src/apis/gmail");
-const { generateConfig } = require("./auth-setup");
+require("dotenv").config();
 
 const oAuth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
@@ -31,6 +30,5 @@ async function getTokens(code) {
 
 module.exports = {
   getTokens,
-  generateConfig,
   oAuth2Client,
 };
