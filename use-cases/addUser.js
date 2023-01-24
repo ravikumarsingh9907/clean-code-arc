@@ -1,7 +1,8 @@
-module.exports.excuteAddUser = function ({ usersDb }) {
+module.exports = function excuteAddUser({ usersDb }) {
   return async function addUserDetails({ oAuth2Client, axios, paramEmail }) {
     const url = `https://gmail.googleapis.com/gmail/v1/users/${paramEmail}/messages`;
     const { token } = await oAuth2Client.getAccessToken();
+
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,

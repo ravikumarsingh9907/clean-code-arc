@@ -1,4 +1,3 @@
-const axios = require("axios");
 const { google } = require("googleapis");
 require("dotenv").config();
 
@@ -23,12 +22,6 @@ const url = oAuth2Client.generateAuthUrl({
 
 console.log(url);
 
-async function getTokens(code) {
-  const { tokens } = await oAuth2Client.getToken(code);
-  oAuth2Client.setCredentials(tokens);
-}
-
 module.exports = {
-  getTokens,
   oAuth2Client,
 };

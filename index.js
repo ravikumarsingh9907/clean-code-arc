@@ -1,8 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const user = require("./controllers");
-const { getTokens, generateConfig, oAuth2Client } = require("./config");
-const { makeExpressCallback } = require("./expressRequest");
+const makeExpressCallback = require("./expressRequest");
 require("./config");
 dotenv.config();
 

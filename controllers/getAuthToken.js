@@ -1,8 +1,12 @@
-module.exports.getAuthToken = function ({ getTokens }) {
+module.exports = function getAuthToken({ user }) {
   return async function getToken(httpRequest) {
     try {
-      await getTokens(httpRequest.query.code);
+      await user.getToken(httpRequest.query.code);
 
+      /*
+      It will return data from query string
+      code="accesstoken"
+      */
       return {
         headers: {
           "Content-Type": "application/json",
@@ -11,6 +15,9 @@ module.exports.getAuthToken = function ({ getTokens }) {
         body: httpRequest.query.code,
       };
     } catch (e) {
+      /*
+      It will return error if any occur while fetching query string value
+      */
       return {
         headers: {
           "Content-Type": "application/json",

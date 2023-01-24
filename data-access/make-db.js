@@ -1,4 +1,4 @@
-module.exports.makeAddUserDb = function ({ makeDb, sequelize }) {
+module.exports = function makeAddUserDb({ makeDb, sequelize }) {
   return Object.freeze({
     addUser,
     findByEmail,
@@ -16,6 +16,8 @@ module.exports.makeAddUserDb = function ({ makeDb, sequelize }) {
 
     const get = `SELECT * FROM users`;
     const [getUser, metadata] = await sequelize.query(get);
+
+    console.log(getUser);
   }
 
   async function findByEmail({ email }) {
@@ -26,6 +28,24 @@ module.exports.makeAddUserDb = function ({ makeDb, sequelize }) {
       return null;
     }
 
+    /*
+    It will throw query data from database on given condition
+    EXP: email = "someone123@gmail.com"
+    [
+      {
+      id: "123456",
+      name: "Ravi Kumar",
+      email: "someone123@gmail.com"
+     },
+     {
+      id: "9876554",
+      name: "Ravi Kumar",
+      email: "someone123@gmail.com"
+     }
+     ...
+     ...
+    ] 
+    */
     return getUser;
   }
 };

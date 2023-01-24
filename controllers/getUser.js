@@ -1,4 +1,4 @@
-module.exports.makeGetUser = function ({ user }) {
+module.exports = function makeGetUser({ user }) {
   return async function getUserByEmail(httpRequest) {
     try {
       const headers = {
@@ -7,6 +7,14 @@ module.exports.makeGetUser = function ({ user }) {
       const posted = await user.getUser({
         email: `'${httpRequest.body.email}'`,
       });
+      /*
+      It will return queried data
+      exp: [{
+        id:"1234567654345676543",
+        name: "Some Name",
+        email: "someone@gmail.com"
+      }]
+      */
       return {
         headers,
         statusCode: 200,

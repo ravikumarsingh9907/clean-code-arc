@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { makeAddUserDb } = require("./make-db");
+const makeAddUserDb = require("./make-db.js");
 const { Sequelize } = require("sequelize-cockroachdb");
 const sequelize = new Sequelize(process.env.DB_URL);
 

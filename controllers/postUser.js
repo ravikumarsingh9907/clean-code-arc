@@ -1,4 +1,4 @@
-module.exports.makePostUser = function ({ user, oAuth2Client, axios }) {
+module.exports = function makePostUser({ user, oAuth2Client, axios }) {
   return async function postUser(httpRequest) {
     try {
       const paramEmail = httpRequest.params.email;
@@ -11,7 +11,6 @@ module.exports.makePostUser = function ({ user, oAuth2Client, axios }) {
         body: "data added",
       };
     } catch (e) {
-      // TODO: Error logging
       return {
         headers: {
           "Content-Type": "application/json",
