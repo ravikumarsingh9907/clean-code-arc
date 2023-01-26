@@ -29,6 +29,6 @@ module.exports = function excuteGetUserByEmail({ usersDb }) {
      ...
     ] 
     */
-    return usersDb.findByEmail({ email });
+    return await usersDb.findByEmail({ email });
   };
 };

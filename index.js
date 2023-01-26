@@ -11,6 +11,8 @@ app.use(express.json());
 app.get("/oauth2callback", makeExpressCallback(user.authToken));
 app.post(`/user/post/:email`, makeExpressCallback(user.postUser));
 app.get(`/user/getByEmail`, makeExpressCallback(user.getUser));
+app.patch(`/user/update/:id`, makeExpressCallback(user.updateUser));
+app.delete("/user/delete/:id", makeExpressCallback(user.deleteUser));
 
 app.listen(3000, () => {
   console.log("Server is listening on port 3000");
