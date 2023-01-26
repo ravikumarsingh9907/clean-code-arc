@@ -2,6 +2,7 @@ module.exports = function excuteGetUserByEmail({ usersDb }) {
   return async function getUserDetail({ email } = {}) {
     let validRegex =
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
     if (!email) {
       throw new Error("You must give a email id.");
     }
@@ -9,8 +10,6 @@ module.exports = function excuteGetUserByEmail({ usersDb }) {
     if (!email.match(validRegex) || !email.includes(".")) {
       throw new Error("Please enter valid email id");
     }
-
-    const result = usersDb.findByEmail({ email });
 
     /*
     It will throw query data from database on given condition
@@ -30,6 +29,6 @@ module.exports = function excuteGetUserByEmail({ usersDb }) {
      ...
     ] 
     */
-    return result;
+    return usersDb.findByEmail({ email });
   };
 };

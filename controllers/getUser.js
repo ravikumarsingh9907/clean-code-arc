@@ -5,7 +5,7 @@ module.exports = function makeGetUser({ user }) {
         "Content-Type": "application/json",
       };
       const posted = await user.getUser({
-        email: `'${httpRequest.body.email}'`,
+        email: `${httpRequest.body.email}`,
       });
       /*
       It will return queried data

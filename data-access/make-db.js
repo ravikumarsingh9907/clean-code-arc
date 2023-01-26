@@ -22,10 +22,10 @@ module.exports = function makeAddUserDb({ makeDb, sequelize }) {
 
   async function findByEmail({ email }) {
     await makeDb();
-    const getQuery = `SELECT * FROM users WHERE email=${email}`;
+    const getQuery = `SELECT * FROM users WHERE email='${email}'`;
     const [getUser, metadata] = await sequelize.query(getQuery);
     if (getUser.length === 0) {
-      return null;
+      return "No data found";
     }
 
     /*
