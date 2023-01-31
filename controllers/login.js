@@ -1,14 +1,14 @@
-module.exports = function makePostUser({ user, md5 }) {
-  return async function postUser(httpRequest) {
+module.exports = function makeLoginUser({ user, md5 }) {
+  return async function loginUser(httpRequest) {
     try {
-      const { ...userInfo } = httpRequest.body;
-      const paramEmail = httpRequest.params.email;
-      const posted = await user.userAdded({ md5, ...userInfo });
+      console.log(httpRequest);
+      const { ...userCredentials } = httpRequest.body;
+      const posted = await user.loggingUser({ md5, ...userCredentials });
       return {
         headers: {
           "Content-Type": "application/json",
         },
-        statusCode: 201,
+        statusCode: 200,
         body: posted,
       };
     } catch (e) {

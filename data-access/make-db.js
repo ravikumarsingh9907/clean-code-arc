@@ -4,6 +4,7 @@ module.exports = function makeAddUserDb({ makeDb, sequelize }) {
     findByEmail,
     updateUser,
     deleteUser,
+    loginUser,
   });
 
   async function addUser({ ...userDetails }) {
@@ -12,7 +13,7 @@ module.exports = function makeAddUserDb({ makeDb, sequelize }) {
 
     const columns = Object.keys(store);
     const values = Object.values(store).map((value) => `'${value}'`);
-    const insertData = `INSERT INTO USERS (${columns}) VALUES (${values});`;
+    const insertData = `INSERT INTO customers (${columns}) VALUES (${values});`;
 
     sequelize.query(insertData);
   }
@@ -25,32 +26,13 @@ module.exports = function makeAddUserDb({ makeDb, sequelize }) {
       if (getUser.length === 0) {
         throw new Error("No data found");
       }
-
-      /*
-    It will throw query data from database on given condition
-    EXP: email = "someone123@gmail.com"
-    [
-      {
-      id: "123456",
-      name: "Ravi Kumar",
-      email: "someone123@gmail.com"
-     },
-     {
-      id: "9876554",
-      name: "Ravi Kumar",
-      email: "someone123@gmail.com"
-     }
-     ...
-     ...
-    ] 
-    */
       return getUser;
     } catch (e) {
       return e.message;
     }
   }
 
-  async function updateUser({ userId, ...updateDetails }) {
+  async function updateUser({ userId, hashPass, ...updateDetails }) {
     try {
       await makeDb();
 
@@ -80,7 +62,7 @@ module.exports = function makeAddUserDb({ makeDb, sequelize }) {
         }
       });
 
-      const query = `UPDATE users SET ${result} WHERE user_id='${userId}'`;
+      const query = `UPDATE users SET ${result},password='${hashPass}' WHERE user_id='${userId}'`;
       return await sequelize.query(query);
     } catch (error) {
       return error.message;
@@ -106,6 +88,28 @@ module.exports = function makeAddUserDb({ makeDb, sequelize }) {
       if (!deleteUser) throw new Error("Wrong Query");
 
       return deleteUser;
+    } catch (e) {
+      return e.message;
+    }
+  }
+
+  async function loginUser({ ...userCredentials }) {
+    try {
+      await makeDb();
+      const store = { ...userCredentials };
+      const findByEmail = `SELECT * FROM customers WHERE email='${store.email}'`;
+      const [userFound, metadata] = await sequelize.query(findByEmail);
+
+      if (userFound.length === 0) {
+        throw new Error("Incorrect Email or password");
+      }
+      console.log(userFound);
+
+      if (store.password !== userFound[0].password) {
+        throw new Error("Incorrect Email or password");
+      }
+
+      return userFound;
     } catch (e) {
       return e.message;
     }
